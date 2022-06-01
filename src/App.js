@@ -25,6 +25,14 @@ function App() {
               </>
             }
           ></Route>
+          <Route
+            path="/login"
+            element={
+              <>
+                <h1>Login</h1>
+              </>
+            }
+          ></Route>
         </Routes>
       </div>
     </Router>
