@@ -36,35 +36,39 @@ function Payment() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-    setProcessing(true);
-    const payload = await stripe
-      .confirmCardPayment(clientSecret, {
-        payment_method: {
-          card: elements.getElement(CardElement),
-        },
-      })
-      .then(({ paymentIntent }) => {
-        // paymentIntent = payment confirmation
+    if (user) {
+      setProcessing(true);
+      const payload = await stripe
+        .confirmCardPayment(clientSecret, {
+          payment_method: {
+            card: elements.getElement(CardElement),
+          },
+        })
+        .then(({ paymentIntent }) => {
+          // paymentIntent = payment confirmation
 
-        console.log(user);
-        db.collection("users")
-          .doc(user?.uid)
-          .collection("orders")
-          .doc(paymentIntent.id)
-          .set({
-            basket: basket,
-            amount: paymentIntent.amount,
-            created: paymentIntent.created,
+          console.log(user);
+          db.collection("users")
+            .doc(user?.uid)
+            .collection("orders")
+            .doc(paymentIntent.id)
+            .set({
+              basket: basket,
+              amount: paymentIntent.amount,
+              created: paymentIntent.created,
+            });
+
+          setSucceeded(true);
+          setError(null);
+          setProcessing(false);
+          dispatch({
+            type: "EMPTY_BASKET",
           });
-
-        setSucceeded(true);
-        setError(null);
-        setProcessing(false);
-        dispatch({
-          type: "EMPTY_BASKET",
+          history("/orders", { replace: true });
         });
-        history("/orders", { replace: true });
-      });
+    } else {
+      alert("Please Sign in or Create an account first before placing order");
+    }
   };
   const handleChange = (event) => {
     setDisabled(event.empty);
