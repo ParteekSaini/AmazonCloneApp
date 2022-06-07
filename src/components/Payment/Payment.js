@@ -124,6 +124,11 @@ function Payment() {
                 <button disabled={processing || disabled || succeeded}>
                   <span>{processing ? <p>Processing</p> : "Buy Now"}</span>
                 </button>
+                <small>
+                  This is a clone of Amazon for project purpose and do not
+                  intend to acquire your card details in any manner. Fill
+                  42424... for sucessful test case.
+                </small>
               </div>
               {error && <div>{error}</div>}
             </form>
