@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "./Login.css";
 import { auth } from "../../firebase";
+import LoginSignupForm from "../LoginSignupForm/LoginSignupForm";
 
 function Login() {
   const navigate = useNavigate();
@@ -18,62 +19,17 @@ function Login() {
       .catch((error) => alert(error.message));
   };
 
-  const register = (e) => {
-    e.preventDefault();
-    auth
-      .createUserWithEmailAndPassword(email, password)
-      .then((auth) => {
-        console.log(auth);
-        if (auth) {
-          navigate("/");
-        }
-      })
-      .catch((error) => alert(error.message));
-  };
-
   return (
     <div className="login">
-      <Link to="/">
-        <img
-          className="login__logo"
-          src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Amazon_logo.svg/1024px-Amazon_logo.svg.png"
-          alt="amazon_logo"
-        />
-      </Link>
-      <div className="login__container">
-        <h1>Sign in</h1>
-        <form action="">
-          <h5>Email</h5>
-          <input
-            type="text"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
-
-          <h5>Password</h5>
-          <input
-            type="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-
-          <button
-            type="submit"
-            onClick={signIn}
-            className="login__signInButton"
-          >
-            Sign in
-          </button>
-        </form>
-        <p>
-          By signing-in you agree to the AMAZON CLONE Conditions of Use & Sale.
-          Please see our Privacy Notice, our Cookies Notice and our
-          Interest-Based Ads Notice.
-        </p>
-        <button onClick={register} className="login__registerButton">
-          Create your Amazon Account
-        </button>
-      </div>
+      <LoginSignupForm
+        formHeading={"Sign in"}
+        email={email}
+        password={password}
+        setEmail={setEmail}
+        setPassword={setPassword}
+        buttonHandle={signIn}
+        buttonText={"Create your Amazon Account"}
+      />
     </div>
   );
 }
