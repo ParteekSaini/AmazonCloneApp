@@ -7,6 +7,7 @@ import CheckoutProduct from "../CheckoutProduct/CheckoutProduct";
 import "./Payment.css";
 import axios from "../../axios";
 import { getBasketTotal } from "../../reducer";
+import { db } from "../../firebase";
 
 function Payment() {
   const [{ basket, user }, dispatch] = useStateValue();
@@ -44,6 +45,17 @@ function Payment() {
       })
       .then(({ paymentIntent }) => {
         // paymentIntent = payment confirmation
+
+        console.log(user);
+        db.collection("users")
+          .doc(user?.uid)
+          .collection("orders")
+          .doc(paymentIntent.id)
+          .set({
+            basket: basket,
+            amount: paymentIntent.amount,
+            created: paymentIntent.created,
+          });
 
         setSucceeded(true);
         setError(null);

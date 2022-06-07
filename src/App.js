@@ -64,6 +64,7 @@ function App() {
             path="/orders"
             element={
               <>
+                <Header />
                 <Orders />
               </>
             }
