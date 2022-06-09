@@ -8,4 +8,4 @@
 5. Firestore is used as database to save orders' list for specific user
 6. Backent is implemented using firebase cloud functions
 
-Deployment link for live demo: https://clone-ee6fa.web.app/
+Deployment link for live demo: https://clone-ee6fa.firebaseapp.com/
